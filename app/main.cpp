@@ -9,6 +9,11 @@
 #include <libhomescreen.hpp>
 #include <qlibwindowmanager.h>
 
+#include <QObject>
+#include <myclass.h>
+#include <download.h>
+
+
 int main(int argc, char *argv[])
 {
     QString myname = QString("Hello QML");
@@ -82,6 +87,7 @@ int main(int argc, char *argv[])
             }
         });
 
+	engine.rootContext()->setContextProperty("download", new DownloadManager);
         engine.load(QUrl(QLatin1String("qrc:/main.qml")));
         QObject *root = engine.rootObjects().first();
         QQuickWindow *window = qobject_cast<QQuickWindow *>(root);

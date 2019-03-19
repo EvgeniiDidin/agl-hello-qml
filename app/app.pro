@@ -5,8 +5,9 @@ TARGET = hello_qml
 CONFIG += c++11 link_pkgconfig
 PKGCONFIG += qlibwindowmanager libhomescreen
 
-SOURCES += main.cpp
+SOURCES += main.cpp  download.cpp
 
+HEADERS += download.h traces.h
 RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
