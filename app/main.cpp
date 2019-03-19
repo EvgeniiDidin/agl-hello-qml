@@ -10,7 +10,6 @@
 #include <qlibwindowmanager.h>
 
 #include <QObject>
-#include <myclass.h>
 #include <download.h>
 
 
@@ -32,6 +31,11 @@ int main(int argc, char *argv[])
     else
         context->setContextProperty("applicationScale", 1);
 
+    /*
+    * Under this commet starts part of code responsible for binding application to AGL application Framework
+    * Windowmanager: application access to AGL app framework 
+    * Homecreen :    set event handler for icon tapping.
+    */
     QCommandLineParser parser;
     parser.addPositionalArgument("port", app.translate("main", "port for binding"));
     parser.addPositionalArgument("secret", app.translate("main", "secret for binding"));
@@ -87,11 +91,20 @@ int main(int argc, char *argv[])
             }
         });
 
+	/*
+ 	* Major part of code related to AGL ends here 
+ 	*/
+	
+	/* Here I make visible DownloadManager class from download.cpp(h) in QML code as alias "download"  
+ 	* in app/Page1.qml download.execute() is DownloadManager::execute()
+	*/
 	engine.rootContext()->setContextProperty("download", new DownloadManager);
-        engine.load(QUrl(QLatin1String("qrc:/main.qml")));
+        
+
+	engine.load(QUrl(QLatin1String("qrc:/main.qml")));
         QObject *root = engine.rootObjects().first();
         QQuickWindow *window = qobject_cast<QQuickWindow *>(root);
-        QObject::connect(window, SIGNAL(frameSwapped()), qwm, SLOT(slotActivateSurface()
+        QObject::connect(window, SIGNAL(frameSwapped()), qwm, SLOT(slotActivateSurface()  	//little part of AGL related code
         ));
     }
 
